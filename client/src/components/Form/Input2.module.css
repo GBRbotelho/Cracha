@@ -1,0 +1,97 @@
+.form_control {
+  margin-bottom: 1.5em;
+  float: right;
+  width: 400px;
+  display: none;
+}
+
+.form_control i {
+  display: none;
+}
+
+.form_control span {
+  display: none;
+}
+
+.form_control small {
+  display: none;
+}
+
+.form_control label {
+  margin-bottom: 0.7em;
+  font-weight: bold;
+}
+
+.form_control input {
+  padding: 0.7em;
+  border-radius: 10px;
+  border: none;
+  width: 400px;
+}
+
+.form_control input::placeholder {
+  color: #7b7b7b;
+}
+
+.form_control_error {
+  margin-bottom: 1.5em;
+  width: 420px;
+}
+
+.form_control_error label {
+  margin-bottom: 0.7em;
+  font-weight: bold;
+}
+
+.form_control_success {
+  margin-bottom: 1.5em;
+}
+
+.form_control_success small {
+  display: none;
+}
+
+.form_control_success label {
+  margin-bottom: 0.7em;
+  font-weight: bold;
+}
+
+.form_control_success input {
+  padding: 0.7em;
+  border-radius: 10px;
+  width: 400px;
+  border: 3px solid #4eca64;
+}
+
+.form_control_success select {
+  padding: 0.7em;
+  border-radius: 10px;
+  width: 400px;
+  border: 3px solid #4eca64;
+}
+
+.form_control_error input {
+  padding: 0.7em;
+  border-radius: 10px;
+  width: 400px;
+  border: 3px solid #db5a5a;
+}
+
+.form_control_error select {
+  padding: 0.7em;
+  border-radius: 10px;
+  width: 400px;
+  border: 3px solid #db5a5a;
+}
+
+.form_control_error small {
+  color: #db5a5a;
+}
+
+.form_control_success span {
+  display: none;
+}
+
+.form_control_error i {
+  display: none;
+}

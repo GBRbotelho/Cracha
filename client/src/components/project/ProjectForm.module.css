@@ -1,0 +1,23 @@
+.form {
+  width: 100%;
+  margin: 2em 0;
+  flex-direction: column;
+}
+
+.form h1 {
+  font-size: 20pt;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.invi {
+  display: none;
+}
+
+.form2{
+  padding: 2em 1em;
+}

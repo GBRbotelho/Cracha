@@ -1,0 +1,21 @@
+.cadastro_container div {
+  width: 100%;
+  margin: 5%;
+  padding: 1em;
+  flex-direction: row;
+}
+
+.cadastro_container {
+  width: 100%;
+  margin: 5%;
+  padding: 1em;
+  align-items: center;
+}
+
+.cadastro_container h1 {
+  margin-bottom: 0.5em;
+}
+
+.cadastro_container p {
+  color: #7b7b7b;
+}

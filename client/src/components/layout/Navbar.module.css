@@ -1,0 +1,49 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  background-color: #0d7120;
+  padding: 1em;
+  width: 1350px;
+}
+
+.texto {
+  align-items: center;
+  color: #fff;
+}
+.texto h4 {
+  font-size: 14pt;
+}
+.texto h1 {
+  font-size: 45pt;
+}
+
+.navbarb {
+  display: flex;
+  justify-content: space-between;
+  background-color: #00420c;
+  width: 1350px;
+}
+
+.menu {
+  list-style: none;
+  padding: 1em;
+  float: right;
+}
+
+.list {
+  display: flex;
+  list-style: none;
+}
+
+.item {
+  margin-right: 3em;
+}
+
+.item a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.item a:hover {
+  color: rgb(41, 110, 53);
+}

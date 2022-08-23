@@ -1,0 +1,18 @@
+.cadastro_container {
+  width: 100%;
+  margin: 0 auto;
+  padding: 3em;
+  text-align: center;
+}
+
+.cadastro_container h1 {
+  color: #39cc25;
+}
+
+.cadastro_container h2 {
+  color: #ff3c00;
+}
+
+.cadastro_container img {
+  padding: 2em 2em;
+}
