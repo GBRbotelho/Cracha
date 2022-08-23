@@ -10,7 +10,7 @@ function SucessoBicicleta() {
           Sua entrada esta liberada após a entrega dos documentos abaixo na 2ª
           Seção do 11º Pelotão de Polícia do Exército:
         </h1>
-        <h1>-Copia do RG e do Comprovante de Endereço.</h1>
+        <h1>-Cópia do RG e do Comprovante de Endereço.</h1>
         <h2>AVISOS:</h2>
         <h2>
           Só é permitido transitar pela Av. Soldado Passarinho, no período de
