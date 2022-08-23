@@ -106,7 +106,7 @@ app.post("/addbicicleta", (req, res) => {
         console.log("dado salvo!");
       });
   });
-  res.redirect("/");
+  res.redirect("/sucessobicicleta");
 });
 
 app.post("/addcivil", (req, res) => {

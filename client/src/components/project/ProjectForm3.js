@@ -156,7 +156,7 @@ function ProjectForm3({ btnText }) {
       <div className={styles.row}>
         <Input
           type="text"
-          text="Endereço de sua residencia"
+          text="Endereço de residência"
           name="Endereço"
           placeholder="Insira o nome da rua e o numero da casa"
         />
@@ -183,12 +183,12 @@ function ProjectForm3({ btnText }) {
       </div>
       <div className={styles.form2}>
         <p>
-          Documentos que devem ser entregue na 2ª Seção do 11º Pelotão de
+          Documentos que devem ser entregues na 2ª Seção do 11º Pelotão de
           Polícia do Exército:
         </p>
         <ul>
-          <li>Copia do RG.</li>
-          <li>Copia do Comprovante de Residencial.</li>
+          <li>Cópia do RG.</li>
+          <li>Cópia do Comprovante de Residencial.</li>
         </ul>
       </div>
       <SubmitButton text={btnText} />
