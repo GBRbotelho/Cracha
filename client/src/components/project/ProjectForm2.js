@@ -20,7 +20,7 @@ function ProjectForm2({ btnText }) {
     var Categoria = document.querySelector("#Categoria");
     var Empresa = document.querySelector("#Empresa");
     var Telefone = document.querySelector("#Telefone");
-    var Endereço = document.querySelector("#Endereço");
+    var Rua = document.querySelector("#Rua");
     var Bairro = document.querySelector("#Bairro");
     var Cidade = document.querySelector("#Cidade");
     var CEP = document.querySelector("#CEP");
@@ -30,6 +30,9 @@ function ProjectForm2({ btnText }) {
     var Placa = document.querySelector("#Placa");
     var Motivo = document.querySelector("#Motivo");
     var Outro = document.querySelector("#Outro");
+    var Arquivo2 = document.querySelector("#Arquivo2");
+    var Tipo = Arquivo2.value.substr(-3);
+
     const regex = /[0-9]/;
 
     if (Nome.value === "") {
@@ -126,12 +129,12 @@ function ProjectForm2({ btnText }) {
       Telefone.parentElement.className = Sucesso;
     }
 
-    if (Endereço.value === "") {
-      Endereço.parentElement.className = Erro;
-      Endereço.parentElement.querySelector("small").innerText =
+    if (Rua.value === "") {
+      Rua.parentElement.className = Erro;
+      Rua.parentElement.querySelector("small").innerText =
         "Preencha esse campo";
     } else {
-      Endereço.parentElement.className = Sucesso;
+      Rua.parentElement.className = Sucesso;
     }
 
     if (Bairro.value === "") {
@@ -156,6 +159,18 @@ function ProjectForm2({ btnText }) {
         "Preencha esse campo";
     } else {
       CEP.parentElement.className = Sucesso;
+    }
+
+    if (Arquivo2.value === "") {
+      Arquivo2.parentElement.className = Erro;
+      Arquivo2.parentElement.querySelector("small").innerText =
+        "Anexe o arquivo";
+    } else if (Tipo !== "pdf") {
+      Arquivo2.parentElement.className = Erro;
+      Arquivo2.parentElement.querySelector("small").innerText =
+        "Anexe um arquivo PDF";
+    } else {
+      Arquivo2.parentElement.className = Sucesso;
     }
 
     if (Motivo.value === "Escolha uma opção") {
@@ -186,11 +201,12 @@ function ProjectForm2({ btnText }) {
       Categoria.parentElement.className === Sucesso &&
       Empresa.parentElement.className === Sucesso &&
       Telefone.parentElement.className === Sucesso &&
-      Endereço.parentElement.className === Sucesso &&
+      Rua.parentElement.className === Sucesso &&
       Bairro.parentElement.className === Sucesso &&
       Cidade.parentElement.className === Sucesso &&
       CEP.parentElement.className === Sucesso &&
-      Outro.parentElement.className === Sucesso
+      Outro.parentElement.className === Sucesso &&
+      Arquivo2.parentElement.className === Sucesso
     ) {
       e.currentTarget.submit();
     }
@@ -204,6 +220,7 @@ function ProjectForm2({ btnText }) {
       onSubmit={handleSubmit}
       action="/addcivil"
       className={styles.form}
+      encType="multipart/form-data"
       method="POST"
     >
       <h1>DADOS DO SOLICITANTE</h1>
@@ -256,8 +273,8 @@ function ProjectForm2({ btnText }) {
       <div className={styles.row}>
         <Input
           type="text"
-          text="Endereço de sua residencia"
-          name="Endereço"
+          text="Coloque o nome da Rua e o n° da Casa"
+          name="Rua"
           placeholder="Insira o nome da rua e o numero da casa"
         />
         <Input
@@ -319,17 +336,21 @@ function ProjectForm2({ btnText }) {
           placeholder="Digite Aqui"
         />
       </div>
+      <div className={styles.row}>
+        <Input type="file" text="Anexe o documento" name="Arquivo2" />
+      </div>
       <div className={styles.invi}>
         <InputE type="text" text="Erro" name="Erro" />
         <InputS type="text" text="Sucesso" name="Sucesso" />
       </div>
       <div className={styles.form2}>
-        <p>Anexe um arquivo PDF contendo os seguintes documentos:</p>
-        <ul>
-          <li>Foto da CNH.</li>
-          <li>Documento do veiculo.</li>
-        </ul>
-        <Input type="file" text="Anexe o documento" name="Arquivo" />
+        <div className={styles.form2}>
+          <p>Anexe um arquivo PDF contendo os seguintes documentos:</p>
+          <ul>
+            <li>Foto da CNH.</li>
+            <li>Documento do veiculo.</li>
+          </ul>
+        </div>
       </div>
       <SubmitButton text={btnText} />
     </form>

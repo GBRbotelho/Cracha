@@ -20,7 +20,8 @@ function ProjectForm3({ btnText }) {
     var Cidade = document.querySelector("#Cidade");
     var CEP = document.querySelector("#CEP");
     var Dependentes = document.querySelector("#Dependentes");
-
+    var Arquivo = document.querySelector("#Arquivo");
+    var Tipo = Arquivo.value.substr(-3);
     const regex = /[0-9]/;
 
     if (Nome.value === "") {
@@ -101,6 +102,17 @@ function ProjectForm3({ btnText }) {
     if (Dependentes.value !== "") {
       Dependentes.parentElement.className = Sucesso;
     }
+    if (Arquivo.value === "") {
+      Arquivo.parentElement.className = Erro;
+      Arquivo.parentElement.querySelector("small").innerText =
+        "Anexe o arquivo";
+    } else if (Tipo !== "pdf") {
+      Arquivo.parentElement.className = Erro;
+      Arquivo.parentElement.querySelector("small").innerText =
+        "Anexe um arquivo PDF";
+    } else {
+      Arquivo.parentElement.className = Sucesso;
+    }
 
     if (
       RG.parentElement.className === Sucesso &&
@@ -111,7 +123,8 @@ function ProjectForm3({ btnText }) {
       Rua.parentElement.className === Sucesso &&
       Bairro.parentElement.className === Sucesso &&
       Cidade.parentElement.className === Sucesso &&
-      CEP.parentElement.className === Sucesso
+      CEP.parentElement.className === Sucesso &&
+      Arquivo.parentElement.className === Sucesso
     ) {
       e.currentTarget.submit();
     }
@@ -182,13 +195,15 @@ function ProjectForm3({ btnText }) {
           placeholder=""
         />
       </div>
-      <div className={styles.form2}>
-        <p>Anexe um arquivo PDF contendo os seguintes documentos:</p>
-        <ul>
-          <li>Foto do RG.</li>
-          <li>Comprovante de Residência</li>
-        </ul>
+      <div className={styles.row}>
         <Input type="file" text="Anexe o documento" name="Arquivo" />
+        <div className={styles.form2}>
+          <p>Anexe um arquivo PDF contendo os seguintes documentos:</p>
+          <ul>
+            <li>Foto do RG.</li>
+            <li>Comprovante de Residência</li>
+          </ul>
+        </div>
       </div>
       <SubmitButton text={btnText} />
       <div className={styles.invi}>

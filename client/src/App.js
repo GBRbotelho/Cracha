@@ -11,6 +11,7 @@ import Cadastro from "./components/pages/Cadastro";
 import Civil from "./components/pages/Civil";
 import CadastroCivil from "./components/pages/CadastroCivil";
 import SucessoBicicleta from "./components/pages/SucessoBicicleta";
+import SucessoCadastro from "./components/pages/SucessoCadastro";
 
 class App extends Component {
   state = {
@@ -42,7 +43,7 @@ class App extends Component {
             <Route path="/bicicleta" element={<Bicicleta />} />
             <Route path="/cadastro" element={<Cadastro />} />
             <Route path="/veiculo" element={<Civil />} />
-            <Route path="/sucessoCadastro" element={<sucessoCadastro />} />
+            <Route path="/sucessoCadastro" element={<SucessoCadastro />} />
             <Route path="/cadastrocivil" element={<CadastroCivil />} />
             <Route path="/sucessoBicicleta" element={<SucessoBicicleta />} />
           </Routes>

@@ -199,7 +199,7 @@ app.post("/addbicicleta", upload.single("Arquivo"), (req, res) => {
   res.redirect("/sucessobicicleta");
 });
 
-app.post("/addcivil", (req, res) => {
+app.post("/addcivil", upload.single("Arquivo2"), (req, res) => {
   const novoCadastro = {
     nome: req.body.Nome,
     cpf: req.body.CPF,
@@ -212,7 +212,7 @@ app.post("/addcivil", (req, res) => {
     Categoria: req.body.Categoria,
     Empresa: req.body.Empresa,
     Telefone: req.body.Telefone,
-    Endereço: req.body.Endereço,
+    Rua: req.body.Rua,
     Bairro: req.body.Bairro,
     Cidade: req.body.Categoria,
     CEP: req.body.CEP,
@@ -221,34 +221,98 @@ app.post("/addcivil", (req, res) => {
     Nascimento: req.body.Nascimento,
   };
 
-  let sheet;
-  getDoc().then((doc) => {
-    sheet = doc.sheetsByIndex[1];
-    sheet
-      .addRow({
-        Nome: novoCadastro.nome,
-        Nascimento: novoCadastro.Nascimento,
-        RG: novoCadastro.rg,
-        CPF: novoCadastro.cpf,
-        CNH: novoCadastro.cnh,
-        Categoria: novoCadastro.Categoria,
-        Empresa: novoCadastro.Empresa,
-        Cel: novoCadastro.Telefone,
-        Endereço: novoCadastro.Endereço,
-        Bairro: novoCadastro.Bairro,
-        Cidade: novoCadastro.Cidade,
-        CEP: novoCadastro.CEP,
-        Marca: novoCadastro.marca,
-        Modelo: novoCadastro.modelo,
-        Cor: novoCadastro.cor,
-        Placa: novoCadastro.placa,
-        Motivo: novoCadastro.Motivo,
-        Outro: novoCadastro.Outro,
-      })
-      .then(() => {
-        console.log("dado salvo!");
+  fs.rename(
+    `./uploads/arquivo${nomeArquivo}`,
+    `./uploads/${novoCadastro.cpf + nomeArquivo}`,
+    function (err) {
+      //Caso a execução encontre algum erro
+      if (err) {
+        //A execução irá parar e mostrará o erro
+        console.log(err);
+      } else {
+        //Caso não tenha erro, apenas a mensagem será exibida no terminal
+        console.log("Arquivo renomeado");
+      }
+    }
+  );
+  nomeArquivo = novoCadastro.cpf + nomeArquivo;
+
+  async function uploadFile() {
+    try {
+      const auth = new google.auth.GoogleAuth({
+        keyFile: "./credenciais.json",
+        scopes: ["https://www.googleapis.com/auth/drive"],
       });
+
+      const driveService = google.drive({
+        version: "v3",
+        auth,
+      });
+
+      const fileMetaData = {
+        name: `${nomeArquivo}`,
+        parents: ["1KRswfPABopzcoSt5_7d3EBm_P8FV2SJf"],
+      };
+
+      const media = {
+        mimeType: "image/jpg",
+        body: fs.createReadStream(`./uploads/${nomeArquivo}`),
+      };
+
+      const response = await driveService.files.create({
+        resource: fileMetaData,
+        media: media,
+        field: "id",
+      });
+      ID = "https://drive.google.com/uc?export=view&id=" + response.data.id;
+      return response.data.id;
+    } catch (err) {
+      console.log("Upload file error", err);
+    }
+  }
+
+  uploadFile().then((data) => {
+    console.log(data);
+
+    let sheet;
+    getDoc().then((doc) => {
+      sheet = doc.sheetsByIndex[1];
+      sheet
+        .addRow({
+          Nome: novoCadastro.nome,
+          Nascimento: novoCadastro.Nascimento,
+          RG: novoCadastro.rg,
+          CPF: novoCadastro.cpf,
+          CNH: novoCadastro.cnh,
+          Categoria: novoCadastro.Categoria,
+          Empresa: novoCadastro.Empresa,
+          Cel: novoCadastro.Telefone,
+          Rua: novoCadastro.Rua,
+          Bairro: novoCadastro.Bairro,
+          Cidade: novoCadastro.Cidade,
+          CEP: novoCadastro.CEP,
+          Marca: novoCadastro.marca,
+          Modelo: novoCadastro.modelo,
+          Cor: novoCadastro.cor,
+          Placa: novoCadastro.placa,
+          Motivo: novoCadastro.Motivo,
+          Outro: novoCadastro.Outro,
+          ID: ID,
+          Status: "Pendente",
+        })
+        .then(() => {
+          console.log("dado salvo!");
+          try {
+            fs.unlink(`./uploads/${nomeArquivo}`, function () {});
+          } catch (err) {
+            // handle the error
+            console.log("Erro");
+            console.log(err.message);
+          }
+        });
+    });
   });
+
   res.redirect("/sucessoCadastro");
 });
 
