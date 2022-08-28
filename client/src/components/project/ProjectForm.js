@@ -10,6 +10,7 @@ import InputS from "../Form/InputS";
 function ProjectForm({ btnText }) {
   function handleSubmit(e) {
     e.preventDefault();
+
     var Erro = document.querySelector("#Erro").parentElement.className;
     var Sucesso = document.querySelector("#Sucesso").parentElement.className;
     var Nome = document.querySelector("#Nome");
@@ -101,6 +102,22 @@ function ProjectForm({ btnText }) {
       PG.parentElement.className = Sucesso;
     }
 
+    var arquivoenv = document.getElementById("Arquivo").files;
+    console.log(arquivoenv);
+    if (arquivoenv.length > 0) {
+      var arquivoCarregado = arquivoenv[0];
+      var arquivoler = new FileReader();
+      arquivoler.onload = function (arquivoCarregadoEvento) {
+        var srcDados = arquivoCarregadoEvento.target.result;
+
+        var valueBase = document.getElementById("Base64");
+        valueBase.value = srcDados;
+
+        console.log(valueBase.value);
+      };
+    }
+    arquivoler.readAsDataURL(arquivoCarregado);
+
     if (
       OM.parentElement.className === Sucesso &&
       PG.parentElement.className === Sucesso &&
@@ -177,11 +194,15 @@ function ProjectForm({ btnText }) {
           placeholder="Digite a Placa do Veiculo Ex:ABC-0000"
         />
       </div>
+      <div>
+        <Input type="file" text="Insira um arquivo" name="Arquivo" />
+      </div>
 
       <SubmitButton text={btnText} />
       <div className={styles.invi}>
         <InputE type="text" text="Erro" name="Erro" />
         <InputS type="text" text="Sucesso" name="Sucesso" />
+        <Input type="text" text="Insira um arquivo" name="Base64" />
       </div>
     </form>
   );

@@ -7,6 +7,9 @@ const port = process.env.PORT || 5000;
 const bodyParser = require("body-parser");
 const path = require("path");
 
+app.use(bodyParser.json({ limit: "50mb" }));
+app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
+
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(bodyParser.json());
@@ -49,10 +52,11 @@ app.post("/addcadastro", (req, res) => {
     modelo: req.body.Modelo,
     cor: req.body.Cor,
     placa: req.body.Placa,
+    base: req.body.Base64,
   };
   let sheet;
   getDoc().then((doc) => {
-    sheet = doc.sheetsByIndex[1];
+    sheet = doc.sheetsByIndex[2];
     sheet
       .addRow({
         Graduação: novoCadastro.pg,
@@ -65,12 +69,15 @@ app.post("/addcadastro", (req, res) => {
         Cor: novoCadastro.cor,
         Placa: novoCadastro.placa,
         OM: novoCadastro.om,
+        Base: novoCadastro.base,
       })
       .then(() => {
         console.log("dado salvo!");
       });
   });
-  res.redirect("/");
+  console.log(novoCadastro.base);
+  res.send("Teste");
+  //res.redirect("/");
 });
 
 app.post("/addbicicleta", (req, res) => {
