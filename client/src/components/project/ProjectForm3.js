@@ -122,6 +122,7 @@ function ProjectForm3({ btnText }) {
       onSubmit={handleSubmit}
       action="/addbicicleta"
       className={styles.form}
+      encType="multipart/form-data"
       method="POST"
     >
       <h1>DADOS DO SOLICITANTE</h1>
@@ -181,6 +182,7 @@ function ProjectForm3({ btnText }) {
           placeholder=""
         />
       </div>
+      <Input type="file" text="Anexe o documento" name="Arquivo" />
       <div className={styles.form2}>
         <p>
           Documentos que devem ser entregues na 2ª Seção do 11º Pelotão de

@@ -12,9 +12,11 @@
   },
   "dependencies": {
     "body-parser": "^1.20.0",
+    "concurrently": "^3.5.0",
     "express": "^4.16.2",
+    "fs": "^0.0.1-security",
     "google-spreadsheet": "^3.3.0",
-    "concurrently": "^3.5.0"
-  },
-  "devDependencies": {}
+    "googleapis": "^107.0.0",
+    "multer": "^1.4.5-lts.1"
+  }
 }

@@ -28,8 +28,6 @@ function ProjectForm2({ btnText }) {
     var Modelo = document.querySelector("#Modelo");
     var Cor = document.querySelector("#Cor");
     var Placa = document.querySelector("#Placa");
-    var PG = document.querySelector("#PG");
-    var OM = document.querySelector("#OM");
     var Motivo = document.querySelector("#Motivo");
     var Outro = document.querySelector("#Outro");
     const regex = /[0-9]/;

@@ -1,11 +1,29 @@
 const express = require("express");
 const { GoogleSpreadsheet } = require("google-spreadsheet");
+const { google } = require("googleapis");
 const credenciais = require("./credenciais.json");
 const arquivo = require("./arquivo.json");
 const app = express();
 const port = process.env.PORT || 5000;
 const bodyParser = require("body-parser");
 const path = require("path");
+const multer = require("multer");
+const arquivo2 = require("./arquivo2.json");
+let fs = require("fs");
+var nomeArquivo = "nomeArquivo";
+var id = "";
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "uploads/");
+  },
+  filename: function (req, file, cb) {
+    cb(null, "Arquivo" + path.extname(file.originalname));
+    nomeArquivo = path.extname(file.originalname);
+  },
+});
+
+const upload = multer({ storage });
 
 app.use(bodyParser.json({ limit: "50mb" }));
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
@@ -80,7 +98,7 @@ app.post("/addcadastro", (req, res) => {
   //res.redirect("/");
 });
 
-app.post("/addbicicleta", (req, res) => {
+app.post("/addbicicleta", upload.single("Arquivo"), (req, res) => {
   const novoCadastro = {
     nome: req.body.Nome,
     Nascimento: req.body.Nascimento,
@@ -93,6 +111,64 @@ app.post("/addbicicleta", (req, res) => {
     Cidade: req.body.Cidade,
     Dependentes: req.body.Dependentes,
   };
+  fs.rename(
+    "./uploads/arquivo.png",
+    `./uploads/${novoCadastro.cpf + nomeArquivo}`,
+    function (err) {
+      //Caso a execução encontre algum erro
+      if (err) {
+        //A execução irá parar e mostrará o erro
+        throw err;
+      } else {
+        //Caso não tenha erro, apenas a mensagem será exibida no terminal
+        console.log("Arquivo renomeado");
+      }
+    }
+  );
+  console.log("Nome do arquivo é " + nomeArquivo);
+  nomeArquivo = novoCadastro.cpf + nomeArquivo;
+  console.log("Nome do arquivo é " + nomeArquivo);
+
+  async function uploadFile() {
+    try {
+      const auth = new google.auth.GoogleAuth({
+        keyFile: "./credenciais.json",
+        scopes: ["https://www.googleapis.com/auth/drive"],
+      });
+
+      const driveService = google.drive({
+        version: "v3",
+        auth,
+      });
+
+      const fileMetaData = {
+        name: `${nomeArquivo}`,
+        parents: ["1LMWRGHAKv1U6FkG88ibmuPiZX4WYTSU3"],
+      };
+
+      const media = {
+        mimeType: "image/jpg",
+        body: fs.createReadStream(`./uploads/${nomeArquivo}`),
+      };
+
+      const response = await driveService.files.create({
+        resource: fileMetaData,
+        media: media,
+        field: "id",
+      });
+      console.log(nomeArquivo);
+      return response.data.id;
+    } catch (err) {
+      console.log("Upload file error", err);
+    }
+  }
+
+  uploadFile().then((data) => {
+    console.log(data);
+    id = data;
+    //https://drive.google.com/uc?export=view&id=
+  });
+
   let sheet;
   getDoc().then((doc) => {
     sheet = doc.sheetsByIndex[0];
@@ -108,11 +184,13 @@ app.post("/addbicicleta", (req, res) => {
         Bairro: novoCadastro.Bairro,
         Cidade: novoCadastro.Cidade,
         Dependentes: novoCadastro.Dependentes,
+        ID: id,
       })
       .then(() => {
         console.log("dado salvo!");
       });
   });
+
   res.redirect("/sucessobicicleta");
 });
 
