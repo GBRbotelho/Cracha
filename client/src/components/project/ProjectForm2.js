@@ -323,6 +323,14 @@ function ProjectForm2({ btnText }) {
         <InputE type="text" text="Erro" name="Erro" />
         <InputS type="text" text="Sucesso" name="Sucesso" />
       </div>
+      <div className={styles.form2}>
+        <p>Anexe um arquivo PDF contendo os seguintes documentos:</p>
+        <ul>
+          <li>Foto da CNH.</li>
+          <li>Documento do veiculo.</li>
+        </ul>
+        <Input type="file" text="Anexe o documento" name="Arquivo" />
+      </div>
       <SubmitButton text={btnText} />
     </form>
   );

@@ -15,7 +15,7 @@ function ProjectForm3({ btnText }) {
     var CPF = document.querySelector("#CPF");
     var RG = document.querySelector("#RG");
     var Telefone = document.querySelector("#Telefone");
-    var Endereço = document.querySelector("#Endereço");
+    var Rua = document.querySelector("#Rua");
     var Bairro = document.querySelector("#Bairro");
     var Cidade = document.querySelector("#Cidade");
     var CEP = document.querySelector("#CEP");
@@ -66,12 +66,12 @@ function ProjectForm3({ btnText }) {
       Telefone.parentElement.className = Sucesso;
     }
 
-    if (Endereço.value === "") {
-      Endereço.parentElement.className = Erro;
-      Endereço.parentElement.querySelector("small").innerText =
+    if (Rua.value === "") {
+      Rua.parentElement.className = Erro;
+      Rua.parentElement.querySelector("small").innerText =
         "Preencha esse campo";
     } else {
-      Endereço.parentElement.className = Sucesso;
+      Rua.parentElement.className = Sucesso;
     }
 
     if (Bairro.value === "") {
@@ -108,7 +108,7 @@ function ProjectForm3({ btnText }) {
       Nome.parentElement.className === Sucesso &&
       Nascimento.parentElement.className === Sucesso &&
       Telefone.parentElement.className === Sucesso &&
-      Endereço.parentElement.className === Sucesso &&
+      Rua.parentElement.className === Sucesso &&
       Bairro.parentElement.className === Sucesso &&
       Cidade.parentElement.className === Sucesso &&
       CEP.parentElement.className === Sucesso
@@ -157,8 +157,8 @@ function ProjectForm3({ btnText }) {
       <div className={styles.row}>
         <Input
           type="text"
-          text="Endereço de residência"
-          name="Endereço"
+          text="Nome da Rua e o N° da Casa"
+          name="Rua"
           placeholder="Insira o nome da rua e o numero da casa"
         />
         <Input
@@ -182,16 +182,13 @@ function ProjectForm3({ btnText }) {
           placeholder=""
         />
       </div>
-      <Input type="file" text="Anexe o documento" name="Arquivo" />
       <div className={styles.form2}>
-        <p>
-          Documentos que devem ser entregues na 2ª Seção do 11º Pelotão de
-          Polícia do Exército:
-        </p>
+        <p>Anexe um arquivo PDF contendo os seguintes documentos:</p>
         <ul>
-          <li>Cópia do RG.</li>
-          <li>Cópia do Comprovante de Residencial.</li>
+          <li>Foto do RG.</li>
+          <li>Comprovante de Residência</li>
         </ul>
+        <Input type="file" text="Anexe o documento" name="Arquivo" />
       </div>
       <SubmitButton text={btnText} />
       <div className={styles.invi}>

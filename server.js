@@ -11,7 +11,7 @@ const multer = require("multer");
 const arquivo2 = require("./arquivo2.json");
 let fs = require("fs");
 var nomeArquivo = "nomeArquivo";
-var id = "";
+var ID = "";
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -106,13 +106,14 @@ app.post("/addbicicleta", upload.single("Arquivo"), (req, res) => {
     rg: req.body.RG,
     Telefone: req.body.Telefone,
     CEP: req.body.CEP,
-    Endereço: req.body.Endereço,
+    Rua: req.body.Rua,
     Bairro: req.body.Bairro,
     Cidade: req.body.Cidade,
     Dependentes: req.body.Dependentes,
+    ID: "",
   };
   fs.rename(
-    "./uploads/arquivo.png",
+    `./uploads/arquivo${nomeArquivo}`,
     `./uploads/${novoCadastro.cpf + nomeArquivo}`,
     function (err) {
       //Caso a execução encontre algum erro
@@ -125,9 +126,7 @@ app.post("/addbicicleta", upload.single("Arquivo"), (req, res) => {
       }
     }
   );
-  console.log("Nome do arquivo é " + nomeArquivo);
   nomeArquivo = novoCadastro.cpf + nomeArquivo;
-  console.log("Nome do arquivo é " + nomeArquivo);
 
   async function uploadFile() {
     try {
@@ -156,7 +155,7 @@ app.post("/addbicicleta", upload.single("Arquivo"), (req, res) => {
         media: media,
         field: "id",
       });
-      console.log(nomeArquivo);
+      ID = "https://drive.google.com/uc?export=view&id=" + response.data.id;
       return response.data.id;
     } catch (err) {
       console.log("Upload file error", err);
@@ -165,30 +164,36 @@ app.post("/addbicicleta", upload.single("Arquivo"), (req, res) => {
 
   uploadFile().then((data) => {
     console.log(data);
-    id = data;
-    //https://drive.google.com/uc?export=view&id=
-  });
 
-  let sheet;
-  getDoc().then((doc) => {
-    sheet = doc.sheetsByIndex[0];
-    sheet
-      .addRow({
-        Nome: novoCadastro.nome,
-        Nascimento: novoCadastro.Nascimento,
-        RG: novoCadastro.rg,
-        CPF: novoCadastro.cpf,
-        Cel: req.body.Telefone,
-        CEP: novoCadastro.CEP,
-        Endereço: novoCadastro.Endereço,
-        Bairro: novoCadastro.Bairro,
-        Cidade: novoCadastro.Cidade,
-        Dependentes: novoCadastro.Dependentes,
-        ID: id,
-      })
-      .then(() => {
-        console.log("dado salvo!");
-      });
+    let sheet;
+    getDoc().then((doc) => {
+      sheet = doc.sheetsByIndex[0];
+      sheet
+        .addRow({
+          Nome: novoCadastro.nome,
+          Nascimento: novoCadastro.Nascimento,
+          RG: novoCadastro.rg,
+          CPF: novoCadastro.cpf,
+          Cel: req.body.Telefone,
+          Rua: novoCadastro.Rua,
+          Bairro: novoCadastro.Bairro,
+          Cidade: novoCadastro.Cidade,
+          CEP: novoCadastro.CEP,
+          Dependentes: novoCadastro.Dependentes,
+          ID: ID,
+          Status: "Pendente",
+        })
+        .then(() => {
+          console.log("dado salvo!");
+          try {
+            fs.unlink(`./uploads/${nomeArquivo}`, function () {});
+          } catch (err) {
+            // handle the error
+            console.log("Erro");
+            console.log(err.message);
+          }
+        });
+    });
   });
 
   res.redirect("/sucessobicicleta");
