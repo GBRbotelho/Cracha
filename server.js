@@ -46,8 +46,8 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-app.use(bodyParser.json({ limit: "50mb" }));
-app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
+app.use(bodyParser.json({ limit: "100mb" }));
+app.use(bodyParser.urlencoded({ limit: "100mb", extended: true }));
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -170,7 +170,7 @@ app.post(
         }
       }
     );
-    nomeArquivo = novoCadastro.rg + nomeArquivo;
+    nomeArquivo = novoCadastro.cpf + nomeArquivo;
     nomeArquivo3 = novoCadastro.rg + nomeArquivo3;
     async function uploadFile() {
       try {
