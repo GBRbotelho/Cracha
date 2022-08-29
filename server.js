@@ -8,7 +8,7 @@ const port = process.env.PORT || 5000;
 const bodyParser = require("body-parser");
 const path = require("path");
 const multer = require("multer");
-const arquivo2 = require("./arquivo2.json");
+
 let fs = require("fs");
 var nomeArquivo = "nomeArquivo";
 var nomeArquivo2 = "nomeArquivo2";
