@@ -209,13 +209,6 @@ function ProjectForm3({ btnText }) {
           text="Anexe uma Foto do Comprovante de Residência"
           name="Arquivo3"
         />
-        <div className={styles.form2}>
-          <p>Anexe um arquivo PDF contendo os seguintes documentos:</p>
-          <ul>
-            <li>Foto do RG.</li>
-            <li>Comprovante de Residência</li>
-          </ul>
-        </div>
       </div>
       <SubmitButton text={btnText} />
       <div className={styles.invi}>
