@@ -22,7 +22,7 @@ var IDCRLV = "";
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "uploads/");
+    cb(null, path.join(__dirname, "/uploads"));
   },
   filename: function (req, file, cb) {
     if (file.fieldname === "Arquivo") {
@@ -49,6 +49,7 @@ const upload = multer({ storage });
 app.use(bodyParser.json({ limit: "100mb" }));
 app.use(bodyParser.urlencoded({ limit: "100mb", extended: true }));
 
+app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(bodyParser.json());
