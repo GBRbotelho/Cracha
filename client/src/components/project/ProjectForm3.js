@@ -21,7 +21,8 @@ function ProjectForm3({ btnText }) {
     var CEP = document.querySelector("#CEP");
     var Dependentes = document.querySelector("#Dependentes");
     var Arquivo = document.querySelector("#Arquivo");
-    var Tipo = Arquivo.value.substr(-3);
+    var Arquivo3 = document.querySelector("#Arquivo3");
+
     const regex = /[0-9]/;
 
     if (Nome.value === "") {
@@ -106,12 +107,17 @@ function ProjectForm3({ btnText }) {
       Arquivo.parentElement.className = Erro;
       Arquivo.parentElement.querySelector("small").innerText =
         "Anexe o arquivo";
-    } else if (Tipo !== "pdf") {
-      Arquivo.parentElement.className = Erro;
-      Arquivo.parentElement.querySelector("small").innerText =
-        "Anexe um arquivo PDF";
     } else {
       Arquivo.parentElement.className = Sucesso;
+      console.log(Arquivo.value);
+    }
+
+    if (Arquivo3.value === "") {
+      Arquivo3.parentElement.className = Erro;
+      Arquivo3.parentElement.querySelector("small").innerText =
+        "Anexe o Arquivo";
+    } else {
+      Arquivo3.parentElement.className = Sucesso;
     }
 
     if (
@@ -124,7 +130,8 @@ function ProjectForm3({ btnText }) {
       Bairro.parentElement.className === Sucesso &&
       Cidade.parentElement.className === Sucesso &&
       CEP.parentElement.className === Sucesso &&
-      Arquivo.parentElement.className === Sucesso
+      Arquivo.parentElement.className === Sucesso &&
+      Arquivo3.parentElement.className === Sucesso
     ) {
       e.currentTarget.submit();
     }
@@ -196,7 +203,12 @@ function ProjectForm3({ btnText }) {
         />
       </div>
       <div className={styles.row}>
-        <Input type="file" text="Anexe o documento" name="Arquivo" />
+        <Input type="file" text="Anexe uma Foto do RG" name="Arquivo" />
+        <Input
+          type="file"
+          text="Anexe uma Foto do Comprovante de Residência"
+          name="Arquivo3"
+        />
         <div className={styles.form2}>
           <p>Anexe um arquivo PDF contendo os seguintes documentos:</p>
           <ul>

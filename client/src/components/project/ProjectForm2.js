@@ -31,7 +31,7 @@ function ProjectForm2({ btnText }) {
     var Motivo = document.querySelector("#Motivo");
     var Outro = document.querySelector("#Outro");
     var Arquivo2 = document.querySelector("#Arquivo2");
-    var Tipo = Arquivo2.value.substr(-3);
+    var Arquivo4 = document.querySelector("#Arquivo4");
 
     const regex = /[0-9]/;
 
@@ -165,12 +165,16 @@ function ProjectForm2({ btnText }) {
       Arquivo2.parentElement.className = Erro;
       Arquivo2.parentElement.querySelector("small").innerText =
         "Anexe o arquivo";
-    } else if (Tipo !== "pdf") {
-      Arquivo2.parentElement.className = Erro;
-      Arquivo2.parentElement.querySelector("small").innerText =
-        "Anexe um arquivo PDF";
     } else {
       Arquivo2.parentElement.className = Sucesso;
+    }
+
+    if (Arquivo4.value === "") {
+      Arquivo4.parentElement.className = Erro;
+      Arquivo4.parentElement.querySelector("small").innerText =
+        "Anexe o arquivo";
+    } else {
+      Arquivo4.parentElement.className = Sucesso;
     }
 
     if (Motivo.value === "Escolha uma opção") {
@@ -206,7 +210,8 @@ function ProjectForm2({ btnText }) {
       Cidade.parentElement.className === Sucesso &&
       CEP.parentElement.className === Sucesso &&
       Outro.parentElement.className === Sucesso &&
-      Arquivo2.parentElement.className === Sucesso
+      Arquivo2.parentElement.className === Sucesso &&
+      Arquivo4.parentElement.className === Sucesso
     ) {
       e.currentTarget.submit();
     }
@@ -337,7 +342,12 @@ function ProjectForm2({ btnText }) {
         />
       </div>
       <div className={styles.row}>
-        <Input type="file" text="Anexe o documento" name="Arquivo2" />
+        <Input type="file" text="Anexe sua CNH" name="Arquivo2" />
+        <Input
+          type="file"
+          text="Anexe seu documento do veiculo CRLV"
+          name="Arquivo4"
+        />
       </div>
       <div className={styles.invi}>
         <InputE type="text" text="Erro" name="Erro" />
