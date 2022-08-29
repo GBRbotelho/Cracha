@@ -22,7 +22,9 @@ var IDCRLV = "";
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, path.join(__dirname, "/uploads"));
+    fs.mkdir("./uploads/", (err) => {
+      cb(null, "./uploads/");
+    });
   },
   filename: function (req, file, cb) {
     if (file.fieldname === "Arquivo") {
