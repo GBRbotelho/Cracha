@@ -15,7 +15,7 @@ var nomeArquivo2 = "nomeArquivo2";
 var nomeArquivo3 = "nomeArquivo3";
 var nomeArquivo4 = "nomeArquivo4";
 
-var IDRG = "";
+var IDRG = "a";
 var IDCP = "";
 var IDCNH = "";
 var IDCRLV = "";
