@@ -317,7 +317,7 @@ app.post(
     };
 
     fs.rename(
-      `./uploads/arquivo2${nomeArquivo2}`,
+      `./uploads/Arquivo2${nomeArquivo2}`,
       `./uploads/${novoCadastro.cpf + nomeArquivo2}`,
       function (err) {
         //Caso a execução encontre algum erro
@@ -333,7 +333,7 @@ app.post(
     nomeArquivo2 = novoCadastro.cpf + nomeArquivo2;
 
     fs.rename(
-      `./uploads/arquivo4${nomeArquivo4}`,
+      `./uploads/Arquivo4${nomeArquivo4}`,
       `./uploads/${novoCadastro.rg + nomeArquivo4}`,
       function (err) {
         //Caso a execução encontre algum erro
