@@ -32,6 +32,7 @@ function ProjectForm2({ btnText }) {
     var Outro = document.querySelector("#Outro");
     var Arquivo2 = document.querySelector("#Arquivo2");
     var Arquivo4 = document.querySelector("#Arquivo4");
+    var Arquivo5 = document.querySelector("#Arquivo5");
 
     const regex = /[0-9]/;
 
@@ -177,6 +178,14 @@ function ProjectForm2({ btnText }) {
       Arquivo4.parentElement.className = Sucesso;
     }
 
+    if (Arquivo5.value === "") {
+      Arquivo5.parentElement.className = Erro;
+      Arquivo5.parentElement.querySelector("small").innerText =
+        "Anexe o arquivo";
+    } else {
+      Arquivo5.parentElement.className = Sucesso;
+    }
+
     if (Motivo.value === "Escolha uma opção") {
       Motivo.parentElement.className = Erro;
       Outro.parentElement.className = Erro;
@@ -211,7 +220,8 @@ function ProjectForm2({ btnText }) {
       CEP.parentElement.className === Sucesso &&
       Outro.parentElement.className === Sucesso &&
       Arquivo2.parentElement.className === Sucesso &&
-      Arquivo4.parentElement.className === Sucesso
+      Arquivo4.parentElement.className === Sucesso &&
+      Arquivo5.parentElement.className === Sucesso
     ) {
       e.currentTarget.submit();
     }
@@ -342,18 +352,44 @@ function ProjectForm2({ btnText }) {
         />
       </div>
       <div className={styles.row}>
-        <Input type="file" text="Anexe sua CNH" name="Arquivo2" />
+        <Input
+          type="file"
+          text="Anexe o Comprovante do Motivo da Solicitação"
+          name="Arquivo5"
+        />
+        <div>
+          <p>Exemplos do Comprovante do Motivo da Solicitação:</p>
+          <scan>-Declaração de Prestação de Serviço</scan>
+          <br />
+          <scan>-Foto do Cracha Embrapa</scan>
+          <br />
+          <scan>-Foto do Cracha U.C.A</scan>
+          <br />
+          <scan>-Foto do Documento de Pensionista</scan>
+          <br />
+        </div>
+      </div>
+      <div className={styles.row}>
+        <Input
+          type="file"
+          text="Anexe sua Carteira Nacional de Habilitação CNH"
+          name="Arquivo2"
+        />
+      </div>
+      <div className={styles.row}>
         <Input
           type="file"
           text="Anexe seu documento do veiculo CRLV"
           name="Arquivo4"
         />
       </div>
+      <div className={styles.row}></div>
+
+      <SubmitButton text={btnText} />
       <div className={styles.invi}>
         <InputE type="text" text="Erro" name="Erro" />
         <InputS type="text" text="Sucesso" name="Sucesso" />
       </div>
-      <SubmitButton text={btnText} />
     </form>
   );
 }

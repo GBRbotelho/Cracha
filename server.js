@@ -14,11 +14,13 @@ var nomeArquivo = "nomeArquivo";
 var nomeArquivo2 = "nomeArquivo2";
 var nomeArquivo3 = "nomeArquivo3";
 var nomeArquivo4 = "nomeArquivo4";
+var nomeArquivo5 = "nomeArquivo5";
 
 var IDRG = "a";
 var IDCP = "";
 var IDCNH = "";
 var IDCRLV = "";
+var IDM = "";
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -42,6 +44,10 @@ const storage = multer.diskStorage({
     if (file.fieldname === "Arquivo4") {
       cb(null, "Arquivo4" + path.extname(file.originalname));
       nomeArquivo4 = path.extname(file.originalname);
+    }
+    if (file.fieldname === "Arquivo5") {
+      cb(null, "Arquivo5" + path.extname(file.originalname));
+      nomeArquivo5 = path.extname(file.originalname);
     }
   },
 });
@@ -289,10 +295,8 @@ app.post(
   "/addcivil",
   upload.fields([
     { name: "Arquivo2", maxCount: 1 },
-    {
-      name: "Arquivo4",
-      maxCount: 1,
-    },
+    { name: "Arquivo4", maxCount: 1 },
+    { name: "Arquivo5", maxCount: 1 },
   ]),
   (req, res) => {
     const novoCadastro = {
@@ -348,6 +352,22 @@ app.post(
     );
     nomeArquivo4 = novoCadastro.rg + nomeArquivo4;
 
+    fs.rename(
+      `./uploads/Arquivo5${nomeArquivo5}`,
+      `./uploads/${novoCadastro.placa + nomeArquivo5}`,
+      function (err) {
+        //Caso a execução encontre algum erro
+        if (err) {
+          //A execução irá parar e mostrará o erro
+          console.log(err);
+        } else {
+          //Caso não tenha erro, apenas a mensagem será exibida no terminal
+          console.log("Arquivo renomeado5");
+        }
+      }
+    );
+    nomeArquivo5 = novoCadastro.placa + nomeArquivo5;
+
     async function uploadFile() {
       try {
         const auth = new google.auth.GoogleAuth({
@@ -377,6 +397,40 @@ app.post(
         });
         IDCNH =
           "https://drive.google.com/uc?export=view&id=" + response.data.id;
+        return response.data.id;
+      } catch (err) {
+        console.log("Upload file error", err);
+      }
+    }
+
+    async function uploadFile3() {
+      try {
+        const auth = new google.auth.GoogleAuth({
+          keyFile: "./credenciais.json",
+          scopes: ["https://www.googleapis.com/auth/drive"],
+        });
+
+        const driveService = google.drive({
+          version: "v3",
+          auth,
+        });
+
+        const fileMetaData = {
+          name: `${nomeArquivo5}`,
+          parents: ["1KRswfPABopzcoSt5_7d3EBm_P8FV2SJf"],
+        };
+
+        const media = {
+          mimeType: "image/jpg",
+          body: fs.createReadStream(`./uploads/${nomeArquivo5}`),
+        };
+
+        const response = await driveService.files.create({
+          resource: fileMetaData,
+          media: media,
+          field: "id",
+        });
+        IDM = "https://drive.google.com/uc?export=view&id=" + response.data.id;
         return response.data.id;
       } catch (err) {
         console.log("Upload file error", err);
@@ -422,6 +476,10 @@ app.post(
       console.log(data);
     });
 
+    uploadFile3().then((data) => {
+      console.log(data);
+    });
+
     uploadFile2().then((data) => {
       console.log(data);
 
@@ -450,6 +508,7 @@ app.post(
             Outro: novoCadastro.Outro,
             IDCNH: IDCNH,
             IDCRLV: IDCRLV,
+            IDM: IDM,
             Status: "Pendente",
           })
           .then(() => {
@@ -457,6 +516,7 @@ app.post(
             try {
               fs.unlink(`./uploads/${nomeArquivo2}`, function () {});
               fs.unlink(`./uploads/${nomeArquivo4}`, function () {});
+              fs.unlink(`./uploads/${nomeArquivo5}`, function () {});
             } catch (err) {
               // handle the error
               console.log("Erro");

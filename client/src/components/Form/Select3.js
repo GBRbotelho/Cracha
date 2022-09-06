@@ -6,6 +6,9 @@ function Select3({ text, name, option, handleOnChange, value }) {
   function mostrarCampo() {
     var valorSelect = document.querySelector("#Motivo");
     var InputOutros = document.querySelector("#Outro");
+    if (valorSelect.value === "Escolha uma opção") {
+      InputOutros.parentElement.style.display = "block";
+    }
     if (valorSelect.value === "Outro") {
       InputOutros.parentElement.style.display = "block";
     } else if (valorSelect === "Escolha uma opção") {
@@ -19,7 +22,12 @@ function Select3({ text, name, option, handleOnChange, value }) {
     <div className={styles.form_control}>
       <div>
         <label htmlFor={name}>{text}:</label>
-        <select name={name} id={name} onChange={mostrarCampo}>
+        <select
+          name={name}
+          id={name}
+          onChange={mostrarCampo}
+          onLoad={mostrarCampo}
+        >
           <option selected disabled hidden>
             Escolha uma opção
           </option>
