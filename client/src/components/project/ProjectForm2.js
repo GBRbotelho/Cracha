@@ -288,7 +288,7 @@ function ProjectForm2({ btnText }) {
       <div className={styles.row}>
         <Input
           type="text"
-          text="Coloque o nome da Rua e o n° da Casa"
+          text="Endereço"
           name="Rua"
           placeholder="Insira o nome da rua e o numero da casa"
         />
